@@ -33,7 +33,7 @@ let editId = null;
 let categoryChart = null;
 
 const BUDGET_KEY = 'monthlyBudget';
-const API_URL = 'http://localhost:3000/expenses';
+const API_URL = 'https://expense-tracker-7o58.onrender.com';
 
 // ===== Utilities =====
 const generateId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
