@@ -1,0 +1,18 @@
+[
+  {
+    "id": "mee1pnl2z1igm9",
+    "amount": 500,
+    "category": "Food",
+    "date": "2025-08-16",
+    "note": "",
+    "recurring": false
+  },
+  {
+    "id": "mee1q0bsx1zr2e",
+    "amount": 300,
+    "category": "Shopping",
+    "date": "2025-08-16",
+    "note": "",
+    "recurring": false
+  }
+]
