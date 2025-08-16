@@ -9,7 +9,9 @@ const PORT = process.env.PORT||3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-const DATA_FILE = 'data.json';
+const path = require('path');
+const DATA_FILE = path.join(__dirname, 'data.json');
+
 
 // Helper: load data
 function loadData() {
