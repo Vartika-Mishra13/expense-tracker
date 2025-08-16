@@ -288,4 +288,8 @@ importInput.addEventListener('change', e => {
   const savedBudget = localStorage.getItem(BUDGET_KEY);
   budgetInput.value = savedBudget || '';
   await loadExpenses();
+<<<<<<< HEAD
 })();
+=======
+})();
+>>>>>>> 234ec12020be3a15923fe74519504eae74863699
