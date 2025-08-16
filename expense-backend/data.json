@@ -1,41 +1,25 @@
 [
   {
-    "id": "mebigzpmgpzemz",
-    "amount": 200,
-    "category": "Food",
-    "date": "2025-08-14",
-    "note": "",
-    "recurring": false
-  },
-  {
-    "id": "mebj53stmcni1w",
-    "amount": 200,
-    "category": "Food",
-    "date": "2025-08-14",
-    "note": "",
-    "recurring": false
-  },
-  {
-    "id": "mebk4vlvizuzr6",
-    "amount": 500,
-    "category": "Shopping",
-    "date": "2025-08-14",
-    "note": "",
-    "recurring": false
-  },
-  {
-    "id": "mecg6h65pq18hd",
+    "id": "mea8clkkyq3vyc",
     "amount": 500,
     "category": "Food",
-    "date": "2025-08-15",
+    "date": "2025-08-13",
     "note": "",
     "recurring": false
   },
   {
-    "id": "mee0blurj7mxij",
+    "id": "mea8cs1mqm58xj",
     "amount": 500,
-    "category": "Food",
-    "date": "2025-08-16",
+    "category": "Transport",
+    "date": "2025-08-13",
+    "note": "",
+    "recurring": false
+  },
+  {
+    "id": "mea8f9fvduuwv8",
+    "amount": 3000,
+    "category": "Bills",
+    "date": "2025-08-13",
     "note": "",
     "recurring": false
   }

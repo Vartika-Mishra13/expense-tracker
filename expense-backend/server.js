@@ -4,7 +4,8 @@ const fs = require('fs');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
-const PORT=process.env.PORT||3000;
+const PORT = 3000;
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -61,6 +62,8 @@ app.delete('/expenses/:id', (req, res) => {
   saveData(expenses);
   res.json({ success: true });
 });
-app.listen(PORT,"0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
+
