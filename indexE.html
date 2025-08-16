@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A simple, responsive expense tracker with chart visualization and local storage." />
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="styleE.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Expense Tracker</h1>
+    <p class="small">Track your spending and visualize categories</p>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- Expense Form -->
+      <section class="form-card">
+        <h2>Add / Edit Expense</h2>
+        <form id="expense-form">
+    
+<div class="row">
+  <label>
+    <input type="checkbox" id="recurring" />
+    Recurring Monthly
+  </label>
+</div>
+
+          <div class="row">
+            <label for="amount">Amount (₹)</label>
+            <input type="number" id="amount" placeholder="Enter amount" step="0.01" required />
+          </div>
+          <div class="row">
+            <label for="category">Category</label>
+            <select id="category" required>
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Bills">Bills</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="row">
+            <label for="date">Date</label>
+            <input type="date" id="date" required />
+          </div>
+          <div class="row">
+            <label for="note">Note</label>
+            <input type="text" id="note" placeholder="Optional description" />
+          </div>
+          <div class="actions">
+            <button type="submit" id="save-btn">Add Expense</button>
+            <button type="button" id="cancel-edit" class="hidden">Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Summary Card -->
+      <section class="summary-card">
+        <h2>Summary</h2>
+        <div class="summary-items">
+          <div>Total Spent: <span id="total">₹0.00</span></div>
+          <div>Top Category: <span id="top-category">-</span></div>
+        </div>
+        <div class="budget-section" style="margin-top: 1em;">
+          <label for="budget-input">Set Monthly Budget (₹): </label>
+          <input type="number" id="budget-input" min="0" step="0.01" placeholder="Enter budget" />
+          <button id="save-budget-btn">Save Budget</button>
+          <div id="budget-warning" style="color: red; font-weight: bold; display: none; margin-top: 0.5em;">
+            You have exceeded your budget!
+          </div>
+        </div>
+        <div style="width:100%; max-width:400px; margin:auto;">
+  <canvas id="categoryChart"></canvas>
+</div>
+>
+      </section>
+    </div>
+
+    <!-- Expense List Table -->
+    <section class="list-container">
+
+      <!-- Export / Import Buttons -->
+      <div class="export-import">
+        <button id="export-btn">Export Data</button>
+        <input type="file" id="import-input" accept=".json" style="display:none;" />
+        <button id="import-btn">Import Data</button>
+      </div>
+
+
+      <!-- Monthly Report -->
+      <div class="monthly-report" style="margin-bottom: 1em;">
+        <label for="report-month">Select Month: </label>
+        <input type="month" id="report-month" />
+        <button id="generate-report-btn">Generate Report</button>
+      </div>
+
+      <div id="report-output" style="white-space: pre-wrap; background:#f0f0f0; padding:1em; border-radius:6px; max-height:300px; overflow:auto; font-family: monospace; font-size: 0.9em;"></div>
+
+      <!-- Filters -->
+      <div class="filters" style="margin-bottom: 1em;">
+        <input type="text" id="search-note" placeholder="Search notes..." style="margin-right: 0.5em;" />
+        <select id="filter-category" style="margin-right: 0.5em;">
+          <option value="">All Categories</option>
+          <option value="Food">Food</option>
+          <option value="Transport">Transport</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Bills">Bills</option>
+          <option value="Other">Other</option>
+        </select>
+        <label for="filter-start">From:</label>
+        <input type="date" id="filter-start" style="margin-right: 0.5em;" />
+        <label for="filter-end">To:</label>
+        <input type="date" id="filter-end" />
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Note</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="expense-tbody">
+          <!-- JS will inject rows here -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Expense Tracker. Built for learning & internships.
+  </footer>
+
+  <script src="scriptE.js"></script>
+</body>
+</html>
