@@ -3,35 +3,114 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A simple, responsive expense tracker with chart visualization and local storage." />
+  <meta
+    name="description"
+    content="A smart, responsive expense tracker with budget monitoring and spending insights."
+  />
   <title>Expense Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Expense Tracker</h1>
-    <p class="small">Track your spending and visualize categories</p>
+  <section class="auth-shell" id="auth-shell">
+    <div class="auth-card">
+      <p class="eyebrow">Private Workspace</p>
+      <h2 id="auth-title">Create your account</h2>
+      <p class="small" id="auth-subtitle">Each user gets their own expenses, budgets, and future smart insights.</p>
+      <form id="auth-form">
+        <div class="row" id="auth-name-row">
+          <label for="auth-name">Name</label>
+          <input type="text" id="auth-name" placeholder="Enter your name" />
+        </div>
+        <div class="row">
+          <label for="auth-email">Email</label>
+          <input type="email" id="auth-email" placeholder="Enter your email" required />
+        </div>
+        <div class="row">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" placeholder="Minimum 6 characters" required />
+        </div>
+        <div class="actions">
+          <button type="submit" id="auth-submit-btn">Sign Up</button>
+          <button type="button" id="auth-toggle-btn" class="secondary-btn">I already have an account</button>
+        </div>
+      </form>
+      <div class="summary-note auth-note">
+        Existing migrated data is available with demo login:
+        <strong>demo@local</strong> / <strong>demo12345</strong>
+      </div>
+      <div id="auth-message" class="auth-message hidden"></div>
+    </div>
+  </section>
+
+  <div id="app-shell" class="hidden">
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Smart Money Dashboard</p>
+      <h1>Expense Tracker</h1>
+      <p class="small">Track spending, spot patterns, and stay ahead of your budget.</p>
+    </div>
+    <div class="hero-panel">
+      <div class="hero-stat-label">This month's status</div>
+      <div class="hero-stat" id="hero-month-total">Rs 0.00</div>
+      <p id="hero-month-message">Start adding expenses to unlock insights.</p>
+      <div class="user-bar">
+        <span id="current-user-name">Signed in</span>
+        <div class="user-actions">
+          <button type="button" id="theme-toggle-btn" class="secondary-btn">Dark Mode</button>
+          <button type="button" id="logout-btn" class="secondary-btn">Logout</button>
+        </div>
+      </div>
+    </div>
   </header>
 
   <main>
-    <div class="container">
-      <!-- Expense Form -->
+    <section class="insight-grid">
+      <article class="insight-card emphasis">
+        <span class="insight-label">Total Spent</span>
+        <strong id="total">Rs 0.00</strong>
+        <p id="total-caption">Across all recorded expenses</p>
+      </article>
+      <article class="insight-card">
+        <span class="insight-label">This Month</span>
+        <strong id="month-total">Rs 0.00</strong>
+        <p id="month-caption">No spending recorded yet</p>
+      </article>
+      <article class="insight-card">
+        <span class="insight-label">Average Expense</span>
+        <strong id="average-expense">Rs 0.00</strong>
+        <p id="average-caption">Based on all entries</p>
+      </article>
+      <article class="insight-card">
+        <span class="insight-label">Top Category</span>
+        <strong id="top-category">-</strong>
+        <p id="top-category-caption">Your highest spend area</p>
+      </article>
+    </section>
+
+    <div class="dashboard-grid">
       <section class="form-card">
         <h2>Add / Edit Expense</h2>
+        <p class="section-copy">Capture each expense with a category, note, date, and recurring tag.</p>
         <form id="expense-form">
-    
-<div class="row">
-  <label>
-    <input type="checkbox" id="recurring" />
-    Recurring Monthly
-  </label>
-</div>
+          <div class="row checkbox-row">
+            <label>
+              <input type="checkbox" id="recurring" />
+              Recurring Monthly
+            </label>
+          </div>
 
           <div class="row">
-            <label for="amount">Amount (₹)</label>
+            <label for="amount">Amount (Rs)</label>
             <input type="number" id="amount" placeholder="Enter amount" step="0.01" required />
           </div>
+
           <div class="row">
             <label for="category">Category</label>
             <select id="category" required>
@@ -42,14 +121,17 @@
               <option value="Other">Other</option>
             </select>
           </div>
+
           <div class="row">
             <label for="date">Date</label>
             <input type="date" id="date" required />
           </div>
+
           <div class="row">
             <label for="note">Note</label>
             <input type="text" id="note" placeholder="Optional description" />
           </div>
+
           <div class="actions">
             <button type="submit" id="save-btn">Add Expense</button>
             <button type="button" id="cancel-edit" class="hidden">Cancel</button>
@@ -57,52 +139,110 @@
         </form>
       </section>
 
-      <!-- Summary Card -->
       <section class="summary-card">
-        <h2>Summary</h2>
-        <div class="summary-items">
-          <div>Total Spent: <span id="total">₹0.00</span></div>
-          <div>Top Category: <span id="top-category">-</span></div>
-        </div>
-        <div class="budget-section" style="margin-top: 1em;">
-          <label for="budget-input">Set Monthly Budget (₹): </label>
-          <input type="number" id="budget-input" min="0" step="0.01" placeholder="Enter budget" />
-          <button id="save-budget-btn">Save Budget</button>
-          <div id="budget-warning" style="color: red; font-weight: bold; display: none; margin-top: 0.5em;">
-            You have exceeded your budget!
+        <h2>Budget & Snapshot</h2>
+        <p class="section-copy">Keep an eye on your monthly pace, biggest spends, and available budget room.</p>
+
+        <div class="budget-section">
+          <label for="budget-input">Set Monthly Budget (Rs)</label>
+          <div class="inline-inputs">
+            <input type="number" id="budget-input" min="0" step="0.01" placeholder="Enter budget" />
+            <button id="save-budget-btn">Save Budget</button>
+          </div>
+          <div id="budget-progress-text" class="summary-note">No budget saved yet.</div>
+          <div class="budget-progress-bar">
+            <div id="budget-progress-fill"></div>
+          </div>
+          <div id="budget-warning" class="warning-banner hidden">
+            You have exceeded your budget this month.
           </div>
         </div>
-        <div style="width:100%; max-width:400px; margin:auto;">
-  <canvas id="categoryChart"></canvas>
-</div>
->
+
+        <div class="summary-block">
+          <h3>Smart Snapshot</h3>
+          <div class="summary-items">
+            <div><span class="summary-label">Most recent expense</span><strong id="recent-expense">-</strong></div>
+            <div><span class="summary-label">Spending pace</span><strong id="daily-average">Rs 0.00 / day</strong></div>
+            <div><span class="summary-label">Biggest single expense</span><strong id="largest-expense">-</strong></div>
+          </div>
+        </div>
       </section>
     </div>
 
-    <!-- Expense List Table -->
+    <section class="feature-grid">
+      <article class="summary-block feature-card">
+        <h3>Category Budgets</h3>
+        <p class="section-copy compact">Set monthly guardrails for each category and compare them with live spending.</p>
+        <div class="inline-inputs">
+          <select id="category-budget-category">
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Bills">Bills</option>
+            <option value="Other">Other</option>
+          </select>
+          <input type="number" id="category-budget-amount" min="0" step="0.01" placeholder="Monthly limit" />
+          <button type="button" id="save-category-budget-btn">Save Category Budget</button>
+        </div>
+        <div id="category-budget-list" class="category-budget-list"></div>
+      </article>
+
+      <article class="summary-block feature-card">
+        <h3>Anomaly Detection</h3>
+        <p class="section-copy compact">Unusual spending, duplicate-looking entries, and budget pressure appear here first.</p>
+        <div id="anomaly-list" class="anomaly-list"></div>
+      </article>
+
+      <article class="summary-block feature-card">
+        <h3>Behavioral Insights</h3>
+        <p class="section-copy compact">Track month-over-month movement, category concentration, and pacing signals.</p>
+        <div id="insights-list" class="insights-list"></div>
+      </article>
+
+      <article class="summary-block feature-card">
+        <h3>Predictive Engine</h3>
+        <p class="section-copy compact">Forecast month-end spend and spot likely category overruns before they happen.</p>
+        <div id="forecast-summary" class="forecast-summary"></div>
+        <div id="forecast-list" class="forecast-list"></div>
+      </article>
+
+      <article class="summary-block feature-card chart-card">
+        <h3>Category Split</h3>
+        <p class="section-copy compact">See which categories are taking the biggest share of your spend.</p>
+        <div class="chart-wrap">
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </article>
+    </section>
+
     <section class="list-container">
+      <div class="section-head">
+        <div>
+          <h2>Expense Activity</h2>
+          <p class="section-copy compact">Search, filter, export, and manage every entry from one clean ledger.</p>
+        </div>
+        <div class="table-status" id="table-status">0 records</div>
+      </div>
+      <div class="toolbar">
+        <div class="export-import">
+          <button id="export-csv-btn">Export CSV</button>
+          <button id="export-json-btn" class="secondary-btn">Backup JSON</button>
+          <input type="file" id="import-input" accept=".json" style="display:none;" />
+          <button id="import-btn">Import Data</button>
+        </div>
 
-      <!-- Export / Import Buttons -->
-      <div class="export-import">
-        <button id="export-btn">Export Data</button>
-        <input type="file" id="import-input" accept=".json" style="display:none;" />
-        <button id="import-btn">Import Data</button>
+        <div class="monthly-report">
+          <label for="report-month">Select Month:</label>
+          <input type="month" id="report-month" />
+          <button id="generate-report-btn">Generate Report</button>
+        </div>
       </div>
 
+      <div id="report-output"></div>
 
-      <!-- Monthly Report -->
-      <div class="monthly-report" style="margin-bottom: 1em;">
-        <label for="report-month">Select Month: </label>
-        <input type="month" id="report-month" />
-        <button id="generate-report-btn">Generate Report</button>
-      </div>
-
-      <div id="report-output" style="white-space: pre-wrap; background:#f0f0f0; padding:1em; border-radius:6px; max-height:300px; overflow:auto; font-family: monospace; font-size: 0.9em;"></div>
-
-      <!-- Filters -->
-      <div class="filters" style="margin-bottom: 1em;">
-        <input type="text" id="search-note" placeholder="Search notes..." style="margin-right: 0.5em;" />
-        <select id="filter-category" style="margin-right: 0.5em;">
+      <div class="filters">
+        <input type="text" id="search-note" placeholder="Search notes..." />
+        <select id="filter-category">
           <option value="">All Categories</option>
           <option value="Food">Food</option>
           <option value="Transport">Transport</option>
@@ -111,32 +251,32 @@
           <option value="Other">Other</option>
         </select>
         <label for="filter-start">From:</label>
-        <input type="date" id="filter-start" style="margin-right: 0.5em;" />
+        <input type="date" id="filter-start" />
         <label for="filter-end">To:</label>
         <input type="date" id="filter-end" />
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Amount</th>
-            <th>Category</th>
-            <th>Date</th>
-            <th>Note</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="expense-tbody">
-          <!-- JS will inject rows here -->
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Expense</th>
+              <th>Timing</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="expense-tbody"></tbody>
+        </table>
+      </div>
     </section>
   </main>
 
   <footer>
     &copy; 2025 Expense Tracker. Built for learning & internships.
   </footer>
+  </div>
 
   <script src="script.js"></script>
 </body>
-
+</html>

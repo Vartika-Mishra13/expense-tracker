@@ -5,7 +5,8 @@
     "category": "Food",
     "date": "2025-08-16",
     "note": "",
-    "recurring": false
+    "recurring": false,
+    "userId": "user_fe64f02192aa80f4"
   },
   {
     "id": "mee1q0bsx1zr2e",
@@ -13,6 +14,97 @@
     "category": "Shopping",
     "date": "2025-08-16",
     "note": "",
-    "recurring": false
+    "recurring": false,
+    "userId": "user_fe64f02192aa80f4"
+  },
+  {
+    "id": "mntzdqu607s9xx",
+    "amount": 500,
+    "category": "Food",
+    "date": "2026-04-11",
+    "note": "",
+    "recurring": false,
+    "userId": "user_fe64f02192aa80f4"
+  },
+  {
+    "id": "mntze1x4ce111p",
+    "amount": 2000,
+    "category": "Bills",
+    "date": "2026-04-11",
+    "note": "",
+    "recurring": false,
+    "userId": "user_fe64f02192aa80f4"
+  },
+  {
+    "id": "mntzecl2eyt3ur",
+    "amount": 500,
+    "category": "Transport",
+    "date": "2026-04-11",
+    "note": "",
+    "recurring": false,
+    "userId": "user_fe64f02192aa80f4"
+  },
+  {
+    "id": "mntzesmcebsovv",
+    "amount": 1000,
+    "category": "Other",
+    "date": "2026-04-11",
+    "note": "",
+    "recurring": false,
+    "userId": "user_fe64f02192aa80f4"
+  },
+  {
+    "id": "mntzf378hsodkt",
+    "amount": 750,
+    "category": "Bills",
+    "date": "2026-04-11",
+    "note": "",
+    "recurring": false,
+    "userId": "user_fe64f02192aa80f4"
+  },
+  {
+    "id": "mntzf92is7lw0o",
+    "amount": 1000,
+    "category": "Other",
+    "date": "2026-04-11",
+    "note": "",
+    "recurring": false,
+    "userId": "user_fe64f02192aa80f4"
+  },
+  {
+    "id": "mnu0kckv9m44d8",
+    "amount": 200,
+    "category": "Food",
+    "date": "2026-04-11",
+    "note": "",
+    "recurring": false,
+    "userId": "user_fad7c49cbf168846"
+  },
+  {
+    "id": "mnu0kjuqi8l90b",
+    "amount": 500,
+    "category": "Bills",
+    "date": "2026-04-11",
+    "note": "",
+    "recurring": false,
+    "userId": "user_fad7c49cbf168846"
+  },
+  {
+    "id": "mnu0kv8tfsiedf",
+    "amount": 100,
+    "category": "Transport",
+    "date": "2026-04-11",
+    "note": "",
+    "recurring": false,
+    "userId": "user_fad7c49cbf168846"
+  },
+  {
+    "id": "mnu0ldi1fc12wh",
+    "amount": 500,
+    "category": "Shopping",
+    "date": "2026-04-11",
+    "note": "",
+    "recurring": false,
+    "userId": "user_fad7c49cbf168846"
   }
 ]

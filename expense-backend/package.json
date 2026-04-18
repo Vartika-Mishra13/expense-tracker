@@ -2,7 +2,7 @@
   "name": "expense-tracker",
   "version": "1.0.0",
   "description": "",
-  "main": "scriptE.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -19,8 +19,8 @@
   },
   "homepage": "https://github.com/Vartika-Mishra13/expense-tracker#readme",
   "dependencies": {
-    "body-parser": "^2.2.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mongoose": "^8.19.3"
   }
 }

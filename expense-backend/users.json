@@ -1,0 +1,20 @@
+[
+  {
+    "id": "user_fe64f02192aa80f4",
+    "name": "Demo User",
+    "email": "demo@local",
+    "passwordHash": "4eaf161c8474e40ca892627fc56458f7ef5d50833fd2190387b3a04939d2f4aace7188b1e443982f72e6e22af3c1d3ae0951f53e25ff8af387cbc313be398a77",
+    "passwordSalt": "bc25b6156edde425ea323fc7276f1343",
+    "tokens": []
+  },
+  {
+    "id": "user_fad7c49cbf168846",
+    "name": "Vartika Mishra",
+    "email": "vartikam032@gmail.com",
+    "passwordHash": "3266299e5859906f589ee7054a65299adabc1c5b1cdcc29e3a61101d60f64dc93c82a608fc104fd89b18e306c6c664df826fc8116aa74ca2a0d094e673e49f04",
+    "passwordSalt": "c7ede4d3247f56e8f7127a131d90f6dc",
+    "tokens": [
+      "0ca52b0d2508058625949c958a51ee46a121255d764b17de"
+    ]
+  }
+]
