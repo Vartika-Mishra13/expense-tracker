@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -7,10 +8,48 @@ const mongoose = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/expense_tracker';
+const MONGO_URI = process.env.MONGO_URI;
+const FRONTEND_URL = process.env.FRONTEND_URL || '';
 
-app.use(cors());
+const configuredOrigins = FRONTEND_URL
+  .split(',')
+  .map(origin => origin.trim())
+  .filter(Boolean);
+
+const defaultAllowedOrigins = [
+  'http://localhost:5500',
+  'http://127.0.0.1:5500',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'https://expense-tracker-7o58.onrender.com'
+];
+
+const allowedOrigins = new Set([...defaultAllowedOrigins, ...configuredOrigins]);
+
+app.use(cors({
+  origin(origin, callback) {
+    // Allow tools/postman/curl and same-origin requests without Origin header.
+    if (!origin) return callback(null, true);
+    // Browsers send "null" origin when frontend is opened directly via file://.
+    if (origin === 'null') return callback(null, true);
+    if (allowedOrigins.has(origin)) return callback(null, true);
+    return callback(new Error('Not allowed by CORS'));
+  }
+}));
 app.use(express.json());
+
+app.get('/health', (req, res) => {
+  res.json({ ok: true, service: 'expense-backend' });
+});
+
+async function bootstrapDatabase() {
+  if (!MONGO_URI) {
+    throw new Error("MONGO_URI not found in environment variables");
+  }
+
+  await mongoose.connect(MONGO_URI);
+  await migrateFileDataToMongo();
+}
 
 const EXPENSES_FILE = path.join(__dirname, 'data.json');
 const USERS_FILE = path.join(__dirname, 'users.json');
@@ -464,11 +503,6 @@ async function migrateFileDataToMongo() {
   }
 }
 
-async function bootstrapDatabase() {
-  await mongoose.connect(MONGO_URI);
-  await migrateFileDataToMongo();
-}
-
 app.post('/auth/signup', async (req, res) => {
   const { name, email, password } = req.body || {};
 
@@ -661,10 +695,13 @@ bootstrapDatabase()
   .then(() => {
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`Server running at http://localhost:${PORT}`);
-      console.log(`MongoDB connected at ${MONGO_URI}`);
+      console.log(`MongoDB connected`);
     });
   })
   .catch(error => {
     console.error('Failed to start server:', error.message);
+    if (String(error.message).includes('querySrv ECONNREFUSED')) {
+      console.error('MongoDB SRV lookup failed. Use a standard (non-SRV) Atlas URI or check your DNS/network/firewall settings.');
+    }
     process.exit(1);
   });

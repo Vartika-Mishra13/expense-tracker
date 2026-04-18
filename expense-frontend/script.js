@@ -80,14 +80,17 @@ const BUDGET_KEY_PREFIX = 'monthlyBudget';
 const AUTH_TOKEN_KEY = 'expenseTrackerAuthToken';
 const THEME_KEY = 'expenseTrackerTheme';
 const isLocalhost = ['', 'localhost', '127.0.0.1'].includes(window.location.hostname);
-const API_BASE_URL = isLocalhost
-  ? 'http://localhost:3001'
-  : 'https://expense-tracker-7o58.onrender.com';
+const isFileProtocol = window.location.protocol === 'file:';
+const RENDER_API_BASE_URL = 'https://expense-tracker-7o58.onrender.com';
+const configuredApiBaseUrl = window.EXPENSE_API_BASE_URL || localStorage.getItem('expenseTrackerApiBaseUrl');
+const API_BASE_URL = configuredApiBaseUrl
+  || (isLocalhost || isFileProtocol ? 'http://localhost:3001' : RENDER_API_BASE_URL);
 const API_URL = `${API_BASE_URL}/expenses`;
 const CATEGORY_BUDGETS_URL = `${API_BASE_URL}/category-budgets`;
 const ANOMALIES_URL = `${API_BASE_URL}/anomalies`;
 const INSIGHTS_URL = `${API_BASE_URL}/insights`;
 const FORECAST_URL = `${API_BASE_URL}/forecast`;
+const BACKEND_HELP_TEXT = `Check backend connection at ${API_BASE_URL}`;
 
 const formatCurrency = value => `Rs ${Number(value || 0).toFixed(2)}`;
 const formatDisplayDate = value => new Date(value).toLocaleDateString('en-IN', {
@@ -350,14 +353,14 @@ async function apiFetch(url, options = {}) {
   if (!response.ok) {
     const message = typeof payload === 'object' && payload
       ? payload.error || 'Something went wrong'
-      : 'Backend returned an unexpected response. Check that the local API is running on http://localhost:3001.';
+      : `Backend returned an unexpected response. ${BACKEND_HELP_TEXT}.`;
     const failure = new Error(message);
     failure.status = response.status;
     throw failure;
   }
 
   if (typeof payload === 'string') {
-    throw new Error('Backend returned HTML instead of JSON. Make sure the API is running on http://localhost:3001.');
+    throw new Error(`Backend returned HTML instead of JSON. ${BACKEND_HELP_TEXT}.`);
   }
 
   return payload;
@@ -444,7 +447,7 @@ async function loadExpenses() {
       await logout(false);
       return;
     }
-    reportOutput.textContent = 'Could not connect to the backend. Start the local API and refresh.';
+    reportOutput.textContent = `Could not connect to the backend. ${BACKEND_HELP_TEXT} and refresh.`;
   }
 }
 
@@ -910,7 +913,7 @@ authForm.addEventListener('submit', async event => {
     try {
       data = responseText ? JSON.parse(responseText) : null;
     } catch (error) {
-      throw new Error('Could not reach the local auth API. Start the backend on http://localhost:3001 and try again.');
+      throw new Error(`Could not reach auth API. ${BACKEND_HELP_TEXT} and try again.`);
     }
 
     if (!response.ok) {
