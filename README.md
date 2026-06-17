@@ -151,12 +151,12 @@ Open `expense-frontend/index.html` in a browser, or use Live Server (VS Code ext
 ## 📸 Screenshots
 
 ### Dashboard + Anomaly Detection
-![Dashboard](Screenshot%202026-06-17%20122831.png)
-![Dashboard 2](Screenshot%202026-06-17%20122843.png)
+![Dashboard](dashboard1.png)
+![Dashboard 2](dashboard2.png)
 
 ### Expense Table + Filters
-![Filters](Screenshot%202026-06-17%20122852.png)
-![Filters 2](Screenshot%202026-06-17%20122859.png)
+![Filters](filter1.png)
+![Filters 2](filter2.png)
 ---
 
 ## 📬 Contact
